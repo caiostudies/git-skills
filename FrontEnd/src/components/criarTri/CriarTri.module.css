@@ -1,0 +1,288 @@
+.container {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.links:hover {
+	color: #000000;
+	text-decoration: none;
+}
+.links {
+	cursor: pointer;
+	color: white;
+	text-decoration: none;
+}
+
+.links a {
+	cursor: pointer;
+	color: white;
+	text-decoration: none;
+}
+
+.links a:hover {
+	color: #000000;
+}
+
+.titles {
+	color: #fff;
+}
+
+.titles h1 {
+	font-size: 10px;
+}
+
+.tColor::before {
+	background-color: #aaaaaa73 !important;
+}
+
+.bt {
+	width: 100%;
+	max-width: 1170px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btAd {
+	background-color: #007bc0;
+	color: white;
+	width: 60px;
+	height: 60px;
+	box-shadow: 0 0 0 4px #fff, inset 0 2px 0 rgba(0, 0, 0, 0.08),
+		0 3px 0 4px rgba(0, 0, 0, 0.05);
+	border: 0px;
+	border-radius: 50%;
+	position: static;
+	z-index: 10;
+	font-size: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s;
+	cursor: pointer;
+}
+
+.btAd:hover {
+	transform: scale(1.03);
+	filter: brightness(110%);
+}
+
+.contTitulos {
+	padding-bottom: 10px;
+}
+
+.titulo {
+	height: 50px;
+	position: relative;
+	width: 100%;
+}
+
+.inpTitulo {
+	background-color: white;
+	color: black;
+	font-size: 18px;
+	height: 100%;
+	outline: 0;
+	width: 100%;
+	padding-left: 10px;
+	border: 1.5px solid #575757;
+	border-radius: 10px;
+}
+
+.contItens {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+}
+
+.itens {
+	border: 1.4px solid #575757;
+	width: 90%;
+	height: 35px;
+	border-radius: 7px;
+	padding-left: 18px;
+}
+
+.ifLink {
+	width: 80%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.btLink {
+	border: 0;
+	background-color: transparent;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	cursor: pointer;
+}
+
+.iLink {
+	color: #e8f1ff;
+	border: 2px solid #e8f1ff;
+	border-radius: 5px;
+	transition: all 0.2s;
+}
+
+.iLink:hover {
+	transform: scale(1.03);
+	border: 2px solid #fff;
+	color: #fff;
+}
+
+.check {
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	width: 100%;
+}
+
+.check p {
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.cLink {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.contBtAdd {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btAddItem {
+	background-color: #575757;
+	padding: 0;
+	margin: 0;
+	border: 0;
+	border-radius: 50%;
+	font-size: 35px;
+	width: 50px;
+	height: 50px;
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: all 0.2s;
+	cursor: pointer;
+}
+
+.btAddItem:hover {
+	transform: scale(1.03);
+	filter: brightness(110%);
+}
+
+.saveTri {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btSave {
+	width: 350px;
+	height: 75px;
+	margin: 25px;
+	font-size: 36px;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-image: linear-gradient(to right, #1f60a5, #05a9cf);
+	border: 0;
+	border-radius: 8px;
+	color: white;
+	transition: all 0.2s ease-in-out;
+	cursor: pointer;
+}
+
+.btSave:hover {
+	filter: brightness(120%);
+	background-image: linear-gradient(to right, #05a9cf, #1f60a5);
+	transform: scale(1.02);
+}
+
+.contHeader {
+	margin: 50px;
+	border-radius: 16px;
+	padding: 10px;
+	width: 90%;
+	max-width: 1300px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+
+.contImg {
+	width: 650px;
+	height: 450px;
+	border-radius: 16px;
+	overflow: hidden;
+}
+
+.btImg {
+	width: 100%;
+	height: 100%;
+	border: 0;
+	background-color: #ececec;
+	color: #575757;
+	cursor: pointer;
+}
+
+.bodyH {
+	width: 480px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.titleH {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 50px;
+	width: 95%;
+	margin: 10px;
+}
+
+.desc{
+	max-width: 450px;
+	min-width: 450px;
+	min-height: 330px;
+	max-height: 330px;
+	border: 1.5px solid #575757;
+	border-radius: 10px;
+	outline: 0;
+}
+
+.infosH{
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	width: 95%;
+	margin: 10px;
+}
+
+.infosH h4{
+	margin: 0;
+	padding: 0;
+}
+
+.ch{
+	outline: 0;
+	border: 1.5px solid #575757;
+	border-radius: 4px;
+}
