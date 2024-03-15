@@ -42,7 +42,7 @@ const Cadastro = () => {
     }
 
     try {
-      const NewUser = await axios.post(`${api}/api/v1/admin/singleRegisterUser`, {
+      const NewUserAdm = await axios.post(`${api}/api/v1/admin/singleRegisterUser`, {
         name: nome,
         edv: edv,
         email_user: "",
