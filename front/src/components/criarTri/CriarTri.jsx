@@ -93,6 +93,7 @@ const CriarTri = () => {
 		alert("Trilha salva com sucesso!");
 	};
 
+
 	// const cont = () => {
 	// 	localStorage.getItem("trilha")
 	// 	alert("Trilha salva com sucesso!");
@@ -166,11 +167,9 @@ const CriarTri = () => {
 			console.log("Error uploading file: ", error);
 		  });
 	
-	
 	};
 	
 	const [Trail_id, setTrail_id] = useState(null);
-	const [image, setImage_trail] = useState(null);
 
 	const changePhoto = async (e) => {
 		e.preventDefault();
@@ -181,12 +180,18 @@ const CriarTri = () => {
 			const Newphoto = await axios.put(
 				`${api}/api/v1/trail/updateTrailPhoto/${Trail_id}`,
 				{
+					nome: "",
 					Trail_id: Trail_id,
 					// nome: Trail_id,
 					image_trail: imageUrl,
+					desc: "",
+					focal_point: "",
+					criador_trilha: 0,
+					carga_horaria: 0,
+					conteudo: "",
 				}
 			);
-			toast.success('Cadastro feito com sucesso', {
+			toast.success('Foto adicionada com sucesso', {
 				position: "top-right",
 				autoClose: 1500,
 				hideProgressBar: false,

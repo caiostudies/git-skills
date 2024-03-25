@@ -14,19 +14,21 @@ import { FaGear } from "react-icons/fa6";
 import { HiIdentification } from "react-icons/hi2";
 import { MdEmail } from "react-icons/md";
 
+
+import api from "../../../../api";
+
 const CadastroAdm = () => {
 	const navigate = useNavigate();
 	const [nome, setNome] = useState("");
 	const [edv, setEdv] = useState("");
 	const [area, setArea] = useState("");
-	const [focal_point, setFocal] = useState("");
 	const [email, setEmail] = useState("");
 
 	const cadastrationAdm = async (e) => {
 		e.preventDefault();
 		console.log("OI oi");
 	
-		if (!nome || !edv || !area || !focal_point || !emailFocal) {
+		if (!nome || !edv || !area || !email) {
 		  toast.error("Preencha todos os campos para ser feito o cadastro", {
 			position: "top-right",
 			autoClose: 1800,
@@ -41,20 +43,17 @@ const CadastroAdm = () => {
 		}
 	
 		try {
-		  const NewUser = await axios.post(`${api}/api/v1/admin/singleRegisterAdmin`, {
+		  const NewUserAdm = await axios.post(`${api}/api/v1/admin/singleRegisterAdmin`, {
 			name: nome,
 			edv: edv,
 			email_user: email,
 			user_area: area,
-			focal_point: focal_point,
-			// admin_email: emailFocal,
 			percentage: 0,
 			typeUser: "",
 			is_activate: 0,
 			hashed_password: edv,
-			image_user: ""
 		  });
-		  toast.success("Cadastro feito com sucesso", {
+		  toast.success("Cadastro de administrador feito com sucesso", {
 			position: "top-right",
 			autoClose: 1500,
 			hideProgressBar: false,
@@ -72,7 +71,7 @@ const CadastroAdm = () => {
 	return (
 		<div className={styles.container}>
 			<Navbar />
-			<form className={styles.contJust}>
+			<form onSubmit={cadastrationAdm} className={styles.contJust}>
 				<div className={styles.contLogin}>
 					<div className={styles.logo}>
 						<img src="src\components\assets\logoSkill-B.svg" alt="logo" />
@@ -100,17 +99,29 @@ const CadastroAdm = () => {
 						<div className={styles.input}>
 							<MdEmail size={20} className={styles.icon} />
 							<div className={styles.line}></div>
-							<Input label="Email" type="text" id="emailFocal" placeholder="" value={email} onChange={(e) => setEmai(e.target.value)}/>
+							<Input label="Email" type="text" id="emailFocal" placeholder="" value={email} onChange={(e) => setEmail(e.target.value)}/>
 						</div>
 					</div>
 
 					<div className={styles.bts}>
-						<button className={styles.bt} type="submit" onClick={CadastroAdm}>
+						<button className={styles.bt} type="submit" >
 							<h1>Continuar</h1>
 						</button>
 					</div>
 				</div>
 			</form>
+			<ToastContainer
+				position="top-right"
+				autoClose={4000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+				theme="light"
+      		/>
 		</div>
 	);
 };

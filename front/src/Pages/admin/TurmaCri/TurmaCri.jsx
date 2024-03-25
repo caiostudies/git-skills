@@ -11,6 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { TbPhotoPlus } from "react-icons/tb";
 
+import api from "../../../api";
+
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { v4 } from "uuid";
+import { storage } from "../../../firebase";
+
 const TurmaCri = () => {
   const navigate = useNavigate();
   const [lider, setLider] = useState("");
@@ -30,8 +36,8 @@ const TurmaCri = () => {
 		e.preventDefault();
 		console.log("Team");
 	
-		if (!lider || !team_name) {
-		  toast.error("Preencha todos os campos para ser feito o cadastro", {
+		if (!team_name) {
+		  toast.error("Preencha todos os campos para ciar o time", {
 			position: "top-right",
 			autoClose: 1800,
 			hideProgressBar: false,
@@ -48,10 +54,10 @@ const TurmaCri = () => {
 		  const NewTeam = await axios.post(`${api}/api/v1/turmas/createTeams`, {
 			lider: "lider",
 			team_name: team_name,
-			// image_team: "",
+			image_team: "",
 	
 		  });
-		  toast.success("Cadastro feito com sucesso", {
+		  toast.success("Time criado com sucesso", {
 			position: "top-right",
 			autoClose: 1500,
 			hideProgressBar: false,
@@ -66,6 +72,62 @@ const TurmaCri = () => {
 		}
 	  };
 
+	const [imageUpload, setImageUpload] = useState(null);
+	const [imageUrl, setImageUrl] = useState(null);
+
+	const uploadFile = () => {
+		if (imageUpload == null) return;
+	
+		const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+	
+		uploadBytes(imageRef, imageUpload)
+		  .then((snapshot) => getDownloadURL(snapshot.ref))
+		  .then((url) => {
+			// Set the latest image URL and clear the previous URLs
+			setImageUrl(url);
+			console.log(url)
+		  })
+		  .catch((error) => {
+			console.log("Error uploading file: ", error);
+		  });
+	
+	};
+
+	const [team_id, setTeam_id] = useState(null);
+
+	const changePhoto = async (e) => {
+		e.preventDefault();
+		console.log("changing");
+
+		try {
+			const Newphoto = await axios.put(
+				`${api}/api/v1/turmas/updateTeamPhoto/${team_id}`,
+				{
+					lider: "lide",
+					team_name: "",
+					image_team: imageUrl,
+				}
+			);
+			toast.success('Foto adicionada com sucesso', {
+				position: "top-right",
+				autoClose: 1500,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined,
+				theme: "light",
+			  });
+			
+		} catch (error) {
+			console.error("Erro na requisição:", error);
+			
+		}
+		
+	};
+
+	
+
 	return (
 		<div className={styles.container}>
 			<Navbar />
@@ -73,7 +135,23 @@ const TurmaCri = () => {
 			<div className={styles.addFoto}>
 				<input
 					type="file"
-					onChange={setArquivo}
+					onChange= {(event) => {
+						setImageUpload(event.target.files[0]);
+					}}
+					id="fileInput"
+					style={{ display: "none" }}
+				/>
+
+					<div className={styles.infosH}>
+						<h4>ID da turma:</h4>
+						<input className={styles.ch} type="text" onChange={(e) => setTeam_id(e.target.value)} />
+					</div>
+
+				<input
+					type="file"
+					onChange= {(event) => {
+						setImageUpload(event.target.files[0]);
+					}}
 					id="fileInput"
 					style={{ display: "none" }}
 				/>
@@ -81,6 +159,15 @@ const TurmaCri = () => {
 					<TbPhotoPlus size={75} />
 					<h1>Adicionar Foto</h1>
 				</button>
+
+				<button className={styles.bt} onClick={uploadFile}>
+					<h1>Adicionar Foto no firebase</h1>
+				</button>
+
+				<button  onClick={changePhoto}>
+					<h1>Mudar foto</h1>
+				</button>
+
 				<div className={styles.inp}>
 					<Input placeholder="" id="nameTeam" label="Nome da Trilha"  onChange={(e) => setTeam_name(e.target.value)} />
 				</div>
@@ -90,6 +177,18 @@ const TurmaCri = () => {
 					Cadastrar
 				</button>
 			</div>
+			<ToastContainer
+			position="top-right"
+			autoClose={4000}
+			hideProgressBar={false}
+			newestOnTop={false}
+			closeOnClick
+			rtl={false}
+			pauseOnFocusLoss
+			draggable
+			pauseOnHover
+			theme="light"
+			/>
 		</div>
 	);
 };
