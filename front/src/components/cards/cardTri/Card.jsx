@@ -3,7 +3,7 @@ import styles from "./Card.module.css";
 import ProgressBar from "../../progress/ProgressBar";
 import { Link } from "react-router-dom";
 
-const Card = ({url, nome, lider, time, cargHora}) => {
+const Card = ({url, nome, lider, time, cargHora, img}) => {
 	const [progressoTrilha, setProgressoTrilha] = useState(0); 
 
 	const atualizarProgresso = (novoProgresso) => {
@@ -13,7 +13,7 @@ const Card = ({url, nome, lider, time, cargHora}) => {
 	return (
 		<Link to={url} className={styles.contTri}>
 			<div className={styles.imgMask}>
-				<img src="src\components\assets\figma.jpg" />
+				<img src={img} />
 			</div>
 			<div className={styles.details}>
 				<div className={styles.front}>

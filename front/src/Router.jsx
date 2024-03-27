@@ -19,6 +19,7 @@ import HubTeams from "./Pages/admin/hubs/hub-TEAMS/HubTeams.jsx";
 
 import MakeTri from "./Pages/admin/makeTri/MakeTri.jsx";
 import TurmaCri from "./Pages/admin/TurmaCri/TurmaCri.jsx";
+import EditTri from "./Pages/admin/editTri/EditTri.jsx";
 
 
 const Router = () => {
@@ -43,6 +44,7 @@ const Router = () => {
 
 				<Route element={<TurmaCri/>} path="/criartime"/>
 				<Route element={<MakeTri />} path="/criartrilha" />
+				<Route element={<EditTri/>} path="/EditTrilha" />
 			</Routes>
 		</BrowserRouter>
 	);

@@ -1,104 +1,141 @@
-// import React from "react";
 import Navbar from "../../../components/navbar/Navbar";
 import styles from "./Trilha.module.css";
 
-import CorpoTri from "../../../components/corpoTri/CorpoTri";
-import CriarTri from "../../../components/criarTri/CriarTri";
-import TextField from '@mui/material/TextField';
 import Input from "../../../components/input/Input";
 
 import axios from "axios";
-// import React, { useEffect } from "react";
 import api from "../../../api";
 import React, { useState, useEffect } from "react";
-import { Button } from "@mui/material";
+
+import {
+  VerticalTimeline,
+  VerticalTimelineElement,
+} from "react-vertical-timeline-component";
 
 const Trilha = () => {
-  const [nome, setNome] = React.useState('');
-  const [desc, setDesc] = React.useState('');
-  const [focal_point, setFocal_point] = React.useState('');
-  const [criador_trilha, setCriador_trilha] = React.useState('');
-  const [carga_horaria, setCarga_horaria] = React.useState('');
-  // /api/v1/trail/trailsfocal/{focalPoint}
-  const [focalPoint, setFocalPoint] = useState("");
+  const [nome, setNome] = useState('');
+  const [desc, setDesc] = useState('');
+  const [focalPoint, setFocalPoint] = useState('');
+  const [criador_trilha, setCriador_trilha] = useState('');
+  const [cargaHora, setCargaHora] = useState('');
+  const [image, setImage] = useState('');
+  const [conteudo, setConteudo] = useState('');
+  const [creator, setCreateor] = useState("");
+  const [isTri, setIsTri] = useState(false);
+  const [trilhaSalva, setTrilhaSalva] = useState([]);
 
-  const get_data = () =>{
-    // console.log(token)
-    axios.get(`http://127.0.0.1:8000/api/v1/trail/trailsfocal/${focalPoint}`,
-    // {headers: {Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAyMzIwOTMyLCJpYXQiOjE3MDIzMTczMzIsImp0aSI6IjllM2NkNmYyZWRiNDQ0NGE4YmMzYWZkYTY1MjVkZTMxIiwidXNlcl9pZCI6NH0.-9h-EG7Qr6uARsEWUKeuUa9Q_pF7ujjGPXRphtvN2Bc"}}
-   //{headers: {Authorization: `Bearer ${token}`}}
-    )
-    .then((response)=>{
-      console.log(response.data)
-      setNome(response.data.nome)
-      setDesc(response.data.desc)
-      setFocal_point(response.data.focal_point)
-      setCriador_trilha(response.data.criador_trilha)
-      setCarga_horaria(response.data.carga_horaria)
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
-  }
+  const get_data = async () => {
+    try {
+      const response = await axios.get(`${api}/api/v1/trail/trails_creator/1254`);
+      console.log("OI oi");
+      if (response.data) {
+        console.log(response.data);
+        setNome(response.data[0].nome);
+        setDesc(response.data[0].desc);
+        setFocalPoint(response.data[0].focal_point);
+        setCargaHora(response.data[0].carga_horaria);
+        setImage(response.data[0].image_trail);
+
+        console.log(conteudo);
+
+        if (response.data[0].conteudo) {
+          setIsTri(true);
+          setConteudo(response.data[0].conteudo);
+          console.log("teste", isTri);
+        }
+      }
+    } catch (error) {
+      console.error("Erro na requisição da trilha:", error);
+      // toast.error("Usuário ou senha inválidos", {
+      //   position: "top-right",
+      //   autoClose: 1500,
+      //   hideProgressBar: false,
+      //   closeOnClick: true,
+      //   pauseOnHover: true,
+      //   draggable: true,
+      //   progress: undefined,
+      //   theme: "light",
+      // });
+    }
+  };
+
+  useEffect(() => {
+    get_data();
+  })
+
+
+  useEffect(() => {
+    if (conteudo) {
+      try {
+        const parsedConteudo = JSON.parse(conteudo);
+        setTrilhaSalva(parsedConteudo);
+      } catch (error) {
+        console.error("Erro ao analisar conteúdo da trilha:", error);
+        setTrilhaSalva([]);
+      }
+    }
+  }, [conteudo]);
 
   return (
     <div className={styles.container}>
       <Navbar />
       <div className={styles.cont}>
-        <div className={styles.bgc}>
-          <div className={styles.imgMask}>
-            <img src="src\components\assets\react.png" alt="" />
+        <div className={styles.imgMask} style={{ backgroundImage: `url(${image})`}}></div>
+        <div className={styles.texts}>
+          <div className={styles.title}>
+            <h1>{nome}</h1>
           </div>
-          <div className={styles.texts}>
-            <div className={styles.title}>
-              <h1>Trilha de Deselvolvimento BackEnd</h1>
+          <div className={styles.desc}>
+            <p>{desc}</p>
+          </div>
+
+          <div className={styles.infos}>
+            <div className={styles.txt}>
+              <h4>Focal Point:</h4>
+              <p>{focalPoint}</p>
             </div>
-            <div className={styles.desc}>
-              <p>
-              <TextField 
-                id="outlined-controlled"
-                label="Email"
-                value={nome}
-              />
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                hendrerit mollis massa, sed dignissim purus mollis quis. Fusce
-                finibus augue id nunc molestie porttitor. Curabitur gravida
-                neque justo, dapibus dapibus odio pharetra nec. Sed vehicula
-                pretium nibh, ut rutrum erat blandit ac. Nunc in augue in felis
-                hendrerit commodo. Donec nec neque tempus, suscipit justo a,
-                malesuada diam. In eget massa diam
-              </p>
+            <div className={styles.txt}>
+              <h4>Porcentagem Concluida:</h4>
+              <p>50 Horas</p>
             </div>
-
-            <Input
-                label="Focal Point"
-                type="text"
-                id="focal"
-                placeholder=""
-                value={focalPoint}
-                onChange={(e) => setFocalPoint(e.target.value)}
-            />
-            <button onClick={get_data}>api</button>
-
-
-            <div className={styles.infos}>
-              <div className={styles.txt}>
-                <h4>Carga Horaria:</h4>
-                <p>50 Horas</p>
-              </div>
-              <div className={styles.txt}>
-                <h4>Porcentagem Concluida:</h4>
-                <p>50 Horas</p>
-              </div>
-              <div className={styles.txt}>
-                <h4>Carga Horaria:</h4>
-                <p>50 Horas</p>
-              </div>
+            <div className={styles.txt}>
+              <h4>Carga Horaria:</h4>
+              <p>{cargaHora} Horas</p>
             </div>
           </div>
         </div>
       </div>
-      <CorpoTri/>
+      {isTri == true && (
+        <div className={styles.contTri}>
+          <VerticalTimeline className={styles.trilhaImg}>
+            {trilhaSalva.map((elemento, index) => (
+              <VerticalTimelineElement
+                key={index}
+                contentStyle={{
+                  background: "#007BC0",
+                  color: "#fff",
+                  boxShadow: "0px 0px 0px 0px",
+                }}
+                contentArrowStyle={{ borderRight: "7px solid #007BC0" }}
+                iconStyle={{ background: "#007BC0", color: "#fff" }}
+              >
+                <div className={styles.textsTri}>
+                  <h1>{elemento.titulo}</h1>
+                </div>
+                {elemento.topicos.map((topico, topicoIndex) => (
+                  <li key={topicoIndex} className={styles.textsTri} id={styles.topicos}>
+                    {topico.link ? (
+                      <a href={topico.link} className={styles.links}>{topico.texto}</a>
+                    ) : (
+                      <span>{topico.texto}</span>
+                    )}
+                  </li>
+                ))}
+              </VerticalTimelineElement>
+            ))}
+          </VerticalTimeline>
+        </div>
+      )}
     </div>
   );
 };
